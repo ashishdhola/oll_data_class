@@ -1,0 +1,116 @@
+--1.
+--CREATE TABLE CLIENT_MASTER (
+--	CLIENTNO VARCHAR(6) PRIMARY KEY
+--	,NAME VARCHAR(20) NOT NULL
+--	,ADDRESS1 VARCHAR(30)
+--	,ADDRESS2 VARCHAR(30)
+--	,CITY VARCHAR(15)
+--	,PINCODE NUMERIC(8)
+--	,STATE VARCHAR(15)
+--	,BALDUE DEC(10, 0)
+--	,constraint ck_CLIENTNO check(CLIENTNO like 'C%')
+--	);
+--insert into CLIENT_MASTER Values('C00001','ivan bayroos','Swastiktower','Jakatnaka','Mumbai','400054','Maharastra','15000');
+--insert into CLIENT_MASTER Values('C00002','Mamta Muzumdar','Swastiktower','Jakatnaka','Madras','780001','Tamil Nadu','0');
+--insert into CLIENT_MASTER Values('C00003','Chhaya Bankar','Swastiktower','Jakatnaka','Mumbai','400057','Maharastra','5000');
+--insert into CLIENT_MASTER Values('C00004','Ashwini Joshi','Swastiktower','Jakatnaka','Banglore','560001','Karnataka','0');
+--insert into CLIENT_MASTER Values('C00005','Hansel colaco','Swastiktower','Jakatnaka','Mumbai','400060','Maharastra','2000');
+--insert into CLIENT_MASTER Values('C00006','Deepak Sharma','Swastiktower','Jakatnaka','Manglore','560050','Karnataka','0');
+--select * from CLIENT_MASTER
+
+
+--2.
+--CREATE TABLE PRODUCT_MASTER (
+--	PRODUCTNO VARCHAR(6) PRIMARY KEY
+--	,DESCRIPTION VARCHAR(15) NOT NULL
+--	,PROFITPERSENTAGE DEC(4, 2) NOT NULL
+--	,UNITEMASURE VARCHAR(10) NOT NULL
+--	,QTYONHAND NUMERIC(8) NOT NULL
+--	,RECORDERLVL NUMERIC(8) NOT NULL
+--	,SELLPRICE DEC(8, 2) NOT NULL
+--	,COSTPRICE DEC(8, 2) NOT NULL
+--	,Constraint ck_productno check(PRODUCTNO like 'P%')
+--	,Constraint ck_sellprice check(SELLPRICE <> 0)
+--	,Constraint ck_costprice check(COSTPRICE <> 0)
+--	);
+
+--insert into PRODUCT_MASTER Values('P00001','T-Shirts','5','Piece','200','50','350','250');
+--insert into PRODUCT_MASTER Values('P00002','Shirt','6','Piece','150','50','500','350');
+--insert into PRODUCT_MASTER Values('P00003','Cotton jeans','5','Piece','100','20','600','450');
+--insert into PRODUCT_MASTER Values('P00004','Jeans','5','Piece','100','20','750','500');
+--insert into PRODUCT_MASTER Values('P00005','Trousers','2','Piece','150','50','850','550');
+--insert into PRODUCT_MASTER Values('P00006','Pull Overs','2.5','Piece','80','30','700','450');
+--insert into PRODUCT_MASTER Values('P00007','Denim Shirts','4','Piece','100','40','350','250');
+--insert into PRODUCT_MASTER Values('P00008','Lycra Top','5','Piece','70','30','300','175');
+--insert into PRODUCT_MASTER Values('P00009','Shirts','5','Piece','75','30','450','300');
+--select * from PRODUCT_MASTER
+
+--3.
+--CREATE TABLE SALESMAN_MASTER (
+--	SALESMANNO VARCHAR(6) PRIMARY KEY
+--	,SALESMANNAME VARCHAR(20) NOT NULL
+--	,ADDRESS1 VARCHAR(30) NOT NULL
+--	,ADDRESS2 VARCHAR(30)
+--	,CITY VARCHAR(20)
+--	,PINCODE NUMERIC(8)
+--	,STATE VARCHAR(20)
+--	,SALAMT NUMERIC(8, 2) NOT NULL
+--	,TGTTOGET NUMERIC(6, 2) NOT NULL
+--	,YTDSALES NUMERIC(6, 2) NOT NULL
+--	,REMARKS VARCHAR(60)
+--	,Constraint ck_SALESMANNO check(SALESMANNO like 'S%')
+--	,Constraint ck_REMARKS check(REMARKS like 'Good')
+--	);
+--insert into SALESMAN_MASTER Values('S00001','Aman','A-14','Worli','Mumbai','400002','Maharashtara','3000','100','50','Good');
+--insert into SALESMAN_MASTER Values('S00002','Omkar','65','Nariman','Mumbai','400001','Maharashtara','3000','200','100','Good');
+--insert into SALESMAN_MASTER Values('S00003','Raj','P-7','Bandara','Mumbai','400032','Maharashtara','3000','200','100','Good');
+--insert into SALESMAN_MASTER Values('S00004','Ashish','A-5','Juhu','Mumbai','400044','Maharashtara','3500','200','150','Good');
+--select * from SALESMAN_MASTER
+
+--4.
+--CREATE TABLE SALES_ORDER (
+--	ORDERNO VARCHAR(6) PRIMARY KEY
+--	,CLIENTNO VARCHAR(6) REFERENCES CLIENT_MASTER
+--	,ORDERDATE DATE NOT NULL
+--	,DELYADDR VARCHAR(25)
+--	,SALESMANNO VARCHAR(6) REFERENCES SALESMAN_MASTER
+--	,DELYTYPE CHAR(1)
+--	,BILLYN CHAR(1)
+--	,DELYDATE DATE
+--	,ORDERSTATUS VARCHAR(10)
+--	,Constraint ck_ORDERNO check(ORDERNO like '0%')
+--	,Constraint ck_ORDERSTATUS check(ORDERSTATUS in('In Process','Cancelled','Fulfilled'))
+--	);
+--insert into SALES_ORDER values ('019001','C00001','12-june-04','Surat','S00001','F','N','20-july-02','In Process');
+--insert into SALES_ORDER values ('019002','C00002','25-june-04','Mumbai','S00002','P','N','27-June-02','Cancelled');
+--insert into SALES_ORDER values ('046865','C00003','18-Feb-04','Kalkata','S00003','F','Y','20-Feb-02','Fulfilled');
+--insert into SALES_ORDER values ('019003','C00001','03-Apr-04','Maharastra','S00001','F','Y','07-Apr-02','Fulfilled');
+--insert into SALES_ORDER values ('046866','C00004','20-May-04','Delhi','S00002','P','N','22-May-02','Cancelled');
+--insert into SALES_ORDER values ('019008','C00005','24-May-04','Ahmdabad','S00004','F','N','26-July-02','In Process');
+--select * from SALES_ORDER
+
+--5.
+--CREATE TABLE SALES_ORDER_DETAILS (
+--	ORDERNO VARCHAR(6) REFERENCES SALES_ORDER
+--	,PRODUCTNO VARCHAR(6) REFERENCES PRODUCT_MASTER
+--	,QTYORDERD NUMERIC(8)
+--	,QTYDISP NUMERIC(8)
+--	,PRODUCTRATE DEC(10, 2)
+--	,Constraint ck_PRODUCTRATE check (PRODUCTRATE <> 0)
+--	,Constraint ck_QTYORDERD check (QTYORDERD <> 0)
+--	);
+--insert into SALES_ORDER_DETAILS values('019001','P00001','4','4','525')
+--insert into SALES_ORDER_DETAILS values('019001','P00002','2','1','8400');
+--insert into SALES_ORDER_DETAILS values('019001','P00003','2','1','5250');
+--insert into SALES_ORDER_DETAILS values('019002','P00001','10','0','525');
+--insert into SALES_ORDER_DETAILS values('046865','P00004','3','3','3150');
+--insert into SALES_ORDER_DETAILS values('046865','P00005','3','1','5250');
+--insert into SALES_ORDER_DETAILS values('046865','P00001','10','10','525');
+--insert into SALES_ORDER_DETAILS values('046865','P00006','4','4','1050');
+--insert into SALES_ORDER_DETAILS values('019003','P00007','2','2','1050');
+--insert into SALES_ORDER_DETAILS values('019003','P00008','1','1','12000');
+--insert into SALES_ORDER_DETAILS values('046866','P00009','1','0','8400');
+--insert into SALES_ORDER_DETAILS values('046866','P00006','1','0','1050');
+--insert into SALES_ORDER_DETAILS values('019008','P00001','10','5','525');
+--insert into SALES_ORDER_DETAILS values('019008','P00007','5','3','1050');
+--select *from SALES_ORDER_DETAILS

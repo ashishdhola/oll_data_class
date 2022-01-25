@@ -1,0 +1,5 @@
+1.clinet master 
+2. product master 
+3. sales man master 
+4. sales oder 
+5. sales oder detail

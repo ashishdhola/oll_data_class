@@ -1,0 +1,16 @@
+git config --global user.name"ASHISH"
+git config --global user.email"ashishdhola0.7@gmail.com"
+git init
+git status
+git add --a
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/ashishdhola/ahgagajabavjavavejvjervjerjvernvervnrvervjnaovjslnvierjgliergerjg.git
+git push -u origin main
+
+after modifide
+git add --a
+git commit -m "first commit"   --your comite counting number 
+git branch -M main
+git push -u origin main
+
